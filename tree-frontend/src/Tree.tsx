@@ -1,4 +1,5 @@
 
+import TreeItem from './TreeItem';
 
 function Tree() {
     const children = [].map(x => <Tree>child</Tree>);
@@ -10,3 +11,5 @@ function Tree() {
         </ul>
         </div>)
 }
+
+export default Tree;
