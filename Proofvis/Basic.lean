@@ -4,6 +4,6 @@ open Lean Widget
 
 @[widget_module]
 def helloWidget : Widget.Module where
-  javascript := include_str "../js/test.js"
+  javascript := include_str ".." / "widget" / "src" / "basic.js"
 
 #widget helloWidget
