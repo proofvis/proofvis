@@ -1,0 +1,6 @@
+name = "proofvis"
+version = "0.1.0"
+defaultTargets = ["Proofvis"]
+
+[[lean_lib]]
+name = "Proofvis"
