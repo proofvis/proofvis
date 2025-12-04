@@ -3,6 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+
 function App() {
   const tree = {
     "proof_state": {"hypotheses": [], "goal": "P \/ Q -> Q \/ P"},
@@ -27,9 +28,20 @@ function App() {
     ]
   };
 
+  let id = 0;
+  function walk(tree: any) {
+    return {
+      id: (id++).toString(),
+      name: JSON.stringify(tree.proof_state),
+      children: tree.children.map((c: any) => walk(c))
+    }
+  }
+
+  const data = walk(tree);
+  console.log(data);
+
   return (
     <>
-      <p>This will be a tree-view!</p>
     </>
   )
 }
