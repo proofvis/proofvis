@@ -1,0 +1,425 @@
+{
+  "proof_state": {
+    "hypotheses": [
+      "m n : ℕ"
+    ],
+    "goal": "m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!"
+  },
+  "next_tactic": "let f := fun m n => ((2 * m)! * (2 * n)!) / (m ! * n ! * (m + n)!)",
+  "children": [
+    {
+      "proof_state": {
+        "hypotheses": [
+          "m n : ℕ",
+          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)"
+        ],
+        "goal": "m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!"
+      },
+      "next_tactic": "revert m",
+      "children": [
+        {
+          "proof_state": {
+            "hypotheses": [
+              "n : ℕ",
+              "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)"
+            ],
+            "goal": "∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!"
+          },
+          "next_tactic": "induction' n with n ih",
+          "children": [
+            {
+              "proof_state": {
+                "hypotheses": [
+                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)"
+                ],
+                "goal": "∀ (m : ℕ), m ! * 0! * (m + 0)! ∣ (2 * m)! * (2 * 0)!"
+              },
+              "next_tactic": "intro m",
+              "children": [
+                {
+                  "proof_state": {
+                    "hypotheses": [
+                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                      "m : ℕ"
+                    ],
+                    "goal": "m ! * 0! * (m + 0)! ∣ (2 * m)! * (2 * 0)!"
+                  },
+                  "next_tactic": "simp only [Nat.factorial_zero, mul_one, add_zero, mul_zero]",
+                  "children": [
+                    {
+                      "proof_state": {
+                        "hypotheses": [
+                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                          "m : ℕ"
+                        ],
+                        "goal": "m ! * m ! ∣ (2 * m)!"
+                      },
+                      "next_tactic": "use Nat.choose (2*m) m",
+                      "children": [
+                        {
+                          "proof_state": {
+                            "hypotheses": [
+                              "f : ℕ → ℕ → ℕ := ⋯",
+                              "m : ℕ"
+                            ],
+                            "goal": "(2 * m)! = m ! * m ! * (2 * m).choose m"
+                          },
+                          "next_tactic": "rw [← Nat.choose_mul_factorial_mul_factorial (n := 2 * m) (k := m)]",
+                          "children": [
+                            {
+                              "proof_state": {
+                                "hypotheses": [
+                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                  "m : ℕ"
+                                ],
+                                "goal": "(2 * m).choose m * m ! * (2 * m - m)! = m ! * m ! * (2 * m).choose m"
+                              },
+                              "next_tactic": "rw [show 2*m-m = m ?_]",
+                              "children": [
+                                {
+                                  "proof_state": {
+                                    "hypotheses": [
+                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                      "m : ℕ"
+                                    ],
+                                    "goal": "2 * m - m = m"
+                                  },
+                                  "next_tactic": "omega",
+                                  "children": []
+                                },
+                                {
+                                  "proof_state": {
+                                    "hypotheses": [
+                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                      "m : ℕ"
+                                    ],
+                                    "goal": "(2 * m).choose m * m ! * m ! = m ! * m ! * (2 * m).choose m"
+                                  },
+                                  "next_tactic": "ring_nf",
+                                  "children": []
+                                }
+                              ]
+                            },
+                            {
+                              "proof_state": {
+                                "hypotheses": [
+                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                  "m : ℕ"
+                                ],
+                                "goal": "m ≤ 2 * m"
+                              },
+                              "next_tactic": "omega",
+                              "children": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "proof_state": {
+                "hypotheses": [
+                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                  "n : ℕ",
+                  "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!"
+                ],
+                "goal": "∀ (m : ℕ), m ! * (n + 1)! * (m + (n + 1))! ∣ (2 * m)! * (2 * (n + 1))!"
+              },
+              "next_tactic": "intro m",
+              "children": [
+                {
+                  "proof_state": {
+                    "hypotheses": [
+                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                      "n : ℕ",
+                      "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                      "m : ℕ"
+                    ],
+                    "goal": "m ! * (n + 1)! * (m + (n + 1))! ∣ (2 * m)! * (2 * (n + 1))!"
+                  },
+                  "next_tactic": "zify",
+                  "children": [
+                    {
+                      "proof_state": {
+                        "hypotheses": [
+                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                          "n : ℕ",
+                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                          "m : ℕ"
+                        ],
+                        "goal": "↑m ! * ↑(n + 1)! * ↑(m + (n + 1))! ∣ ↑(2 * m)! * ↑(2 * (n + 1))!"
+                      },
+                      "next_tactic": "use (4 * f m n - f (m + 1) n)",
+                      "children": [
+                        {
+                          "proof_state": {
+                            "hypotheses": [
+                              "f : ℕ → ℕ → ℕ := ⋯",
+                              "n : ℕ",
+                              "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                              "m : ℕ"
+                            ],
+                            "goal": "↑(2 * m)! * ↑(2 * (n + 1))! ="
+                          },
+                          "next_tactic": "rify",
+                          "children": [
+                            {
+                              "proof_state": {
+                                "hypotheses": [
+                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                  "n : ℕ",
+                                  "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                  "m : ℕ"
+                                ],
+                                "goal": "↑(2 * m)! * ↑(2 * (n + 1))! ="
+                              },
+                              "next_tactic": "dsimp only [f]",
+                              "children": [
+                                {
+                                  "proof_state": {
+                                    "hypotheses": [
+                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                      "n : ℕ",
+                                      "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                      "m : ℕ"
+                                    ],
+                                    "goal": "↑(2 * m)! * ↑(2 * (n + 1))! ="
+                                  },
+                                  "next_tactic": "rw [Nat.cast_div, Nat.cast_div]",
+                                  "children": [
+                                    {
+                                      "proof_state": {
+                                        "hypotheses": [
+                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                          "n : ℕ",
+                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                          "m : ℕ"
+                                        ],
+                                        "goal": "↑(2 * m)! * ↑(2 * (n + 1))! ="
+                                      },
+                                      "next_tactic": "rw [show 2 * Nat.succ n = Nat.succ (Nat.succ (2 * n)) ?_]",
+                                      "children": [
+                                        {
+                                          "proof_state": {
+                                            "hypotheses": [
+                                              "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                              "n : ℕ",
+                                              "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                              "m : ℕ"
+                                            ],
+                                            "goal": "2 * n.succ = (2 * n).succ.succ"
+                                          },
+                                          "next_tactic": "omega",
+                                          "children": []
+                                        },
+                                        {
+                                          "proof_state": {
+                                            "hypotheses": [
+                                              "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                              "n : ℕ",
+                                              "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                              "m : ℕ"
+                                            ],
+                                            "goal": "↑(2 * m)! * ↑(2 * n).succ.succ ! ="
+                                          },
+                                          "next_tactic": "rw [show m + Nat.succ n = Nat.succ (m + n) ?_]",
+                                          "children": [
+                                            {
+                                              "proof_state": {
+                                                "hypotheses": [
+                                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                  "n : ℕ",
+                                                  "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                  "m : ℕ"
+                                                ],
+                                                "goal": "m + n.succ = (m + n).succ"
+                                              },
+                                              "next_tactic": "omega",
+                                              "children": []
+                                            },
+                                            {
+                                              "proof_state": {
+                                                "hypotheses": [
+                                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                  "n : ℕ",
+                                                  "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                  "m : ℕ"
+                                                ],
+                                                "goal": "↑(2 * m)! * ↑(2 * n).succ.succ ! ="
+                                              },
+                                              "next_tactic": "rw [show 2 * (m + 1) = Nat.succ (Nat.succ (2 * m)) ?_]",
+                                              "children": [
+                                                {
+                                                  "proof_state": {
+                                                    "hypotheses": [
+                                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                      "n : ℕ",
+                                                      "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                      "m : ℕ"
+                                                    ],
+                                                    "goal": "2 * (m + 1) = (2 * m).succ.succ"
+                                                  },
+                                                  "next_tactic": "omega",
+                                                  "children": []
+                                                },
+                                                {
+                                                  "proof_state": {
+                                                    "hypotheses": [
+                                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                      "n : ℕ",
+                                                      "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                      "m : ℕ"
+                                                    ],
+                                                    "goal": "↑(2 * m)! * ↑(2 * n).succ.succ ! ="
+                                                  },
+                                                  "next_tactic": "rw [show (m + 1 + n) = Nat.succ (m + n) ?_]",
+                                                  "children": [
+                                                    {
+                                                      "proof_state": {
+                                                        "hypotheses": [
+                                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                          "n : ℕ",
+                                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                          "m : ℕ"
+                                                        ],
+                                                        "goal": "m + 1 + n = (m + n).succ"
+                                                      },
+                                                      "next_tactic": "omega",
+                                                      "children": []
+                                                    },
+                                                    {
+                                                      "proof_state": {
+                                                        "hypotheses": [
+                                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                          "n : ℕ",
+                                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                          "m : ℕ"
+                                                        ],
+                                                        "goal": "↑(2 * m)! * ↑(2 * n).succ.succ ! ="
+                                                      },
+                                                      "next_tactic": "simp only [Nat.factorial_succ]",
+                                                      "children": [
+                                                        {
+                                                          "proof_state": {
+                                                            "hypotheses": [
+                                                              "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                              "n : ℕ",
+                                                              "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                              "m : ℕ"
+                                                            ],
+                                                            "goal": "↑(2 * m)! * ↑((2 * n + 1 + 1) * ((2 * n + 1) * (2 * n)!)) ="
+                                                          },
+                                                          "next_tactic": "push_cast",
+                                                          "children": [
+                                                            {
+                                                              "proof_state": {
+                                                                "hypotheses": [
+                                                                  "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                                  "n : ℕ",
+                                                                  "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                                  "m : ℕ"
+                                                                ],
+                                                                "goal": "↑(2 * m)! * ((2 * ↑n + 1 + 1) * ((2 * ↑n + 1) * ↑(2 * n)!)) ="
+                                                              },
+                                                              "next_tactic": "field_simp",
+                                                              "children": [
+                                                                {
+                                                                  "proof_state": {
+                                                                    "hypotheses": [
+                                                                      "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                                                      "n : ℕ",
+                                                                      "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                                                      "m : ℕ"
+                                                                    ],
+                                                                    "goal": "(2 * ↑n + 1) * (2 * ↑n + 1 + 1) * (↑m + 1) ="
+                                                                  },
+                                                                  "next_tactic": "ring",
+                                                                  "children": []
+                                                                }
+                                                              ]
+                                                            }
+                                                          ]
+                                                        }
+                                                      ]
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    },
+                                    {
+                                      "proof_state": {
+                                        "hypotheses": [
+                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                          "n : ℕ",
+                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                          "m : ℕ"
+                                        ],
+                                        "goal": "(m + 1)! * n ! * (m + 1 + n)! ∣ (2 * (m + 1))! * (2 * n)!"
+                                      },
+                                      "next_tactic": "apply ih",
+                                      "children": []
+                                    },
+                                    {
+                                      "proof_state": {
+                                        "hypotheses": [
+                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                          "n : ℕ",
+                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                          "m : ℕ"
+                                        ],
+                                        "goal": "↑((m + 1)! * n ! * (m + 1 + n)!) ≠ 0"
+                                      },
+                                      "next_tactic": "positivity",
+                                      "children": []
+                                    },
+                                    {
+                                      "proof_state": {
+                                        "hypotheses": [
+                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                          "n : ℕ",
+                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                          "m : ℕ"
+                                        ],
+                                        "goal": "m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!"
+                                      },
+                                      "next_tactic": "apply ih",
+                                      "children": []
+                                    },
+                                    {
+                                      "proof_state": {
+                                        "hypotheses": [
+                                          "f : ℕ → ℕ → ℕ := fun m n => (2 * m)! * (2 * n)! / (m ! * n ! * (m + n)!)",
+                                          "n : ℕ",
+                                          "ih : ∀ (m : ℕ), m ! * n ! * (m + n)! ∣ (2 * m)! * (2 * n)!",
+                                          "m : ℕ"
+                                        ],
+                                        "goal": "↑(m ! * n ! * (m + n)!) ≠ 0"
+                                      },
+                                      "next_tactic": "positivity",
+                                      "children": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
