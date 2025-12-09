@@ -29,21 +29,11 @@ function App() {
     ]
   };
 
-  let id = 0;
-  function walk(tree: any) {
-    return {
-      id: (id++).toString(),
-      name: JSON.stringify(tree.proof_state),
-      children: tree.children.map((c: any) => walk(c))
-    }
-  }
 
-  const data = walk(tree);
-  console.log(data);
 
   return (
     <>
-      <Tree node={data} />
+      <Tree node={tree} />
     </>
   )
 }

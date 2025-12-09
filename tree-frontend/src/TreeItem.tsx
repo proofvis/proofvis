@@ -1,7 +1,7 @@
 import { useState } from "react";
 
 
-function TreeItem({ proof_state, next_tactic} : { proof_state: { hypotheses: string[], goal: string }, next_tactic: string }) {
+function TreeItem({ proof_state, next_tactic } : { proof_state: { hypotheses: string[], goal: string }, next_tactic: string }) {
     const [open, setOpen] = useState(false);
     const hypothesesComponents = proof_state.hypotheses.map(h => {
         return <li>Hypothesis: {h}</li>

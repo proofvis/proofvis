@@ -5,8 +5,11 @@ import TreeItem from './TreeItem'
 // The shape produced by your `walk` function:
 // { id: string; name: string; children: TreeNode[] }
 export interface TreeNode {
-  id: string
-  name: string
+  proof_state: {
+    hypotheses: string[],
+    goal: string
+  }
+  next_tactic: string
   children: TreeNode[]
 }
 
@@ -25,14 +28,12 @@ const Tree: React.FC<TreeProps> = ({ node, depth = 0 }) => {
       {/* One linear "row" per node */}
       <div style={{ marginLeft: depth * 20 }}>
         {/* Assume TreeItem is a simple div-like component */}
-        <TreeItem>
-          {node.name}
-        </TreeItem>
+        <TreeItem proof_state={node.proof_state} next_tactic={node.next_tactic} />
       </div>
 
       {/* Recurse on children */}
-      {node.children.map((child) => (
-        <Tree key={child.id} node={child} depth={depth + 1} />
+      {node.children.map((child, i) => (
+        <Tree key={child.next_tactic + "/" + depth + "/" + i} node={child} depth={depth + 1} />
       ))}
     </div>
   )
