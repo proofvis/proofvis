@@ -32,7 +32,7 @@ const Tree: React.FC<TreeProps> = ({ node, depth = 0 }) => {
   return (
     <div>
       {/* One linear "row" per node */}
-      <div style={{ marginLeft: depth * 20 }}>
+      <div style={{marginLeft: depth * 2 + "rem"}}>
         {/* Assume TreeItem is a simple div-like component */}
         <button onClick={toggleCollapse} style={{}}>
           <span>{isOpen ? '▼' : '▶'}</span> {/* Down arrow */}
